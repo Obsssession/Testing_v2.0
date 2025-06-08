@@ -1,3 +1,4 @@
+
 package API;
 
 import io.restassured.RestAssured;
@@ -24,5 +25,9 @@ public class Specifications {
     public static void installSpecification(RequestSpecification requestspec, ResponseSpecification responsespec) {
         RestAssured.requestSpecification = requestspec;
         RestAssured.responseSpecification = responsespec;
+    }
+
+    public static void installSpecification(RequestSpecification requestspec) {
+        RestAssured.requestSpecification = requestspec;
     }
 }

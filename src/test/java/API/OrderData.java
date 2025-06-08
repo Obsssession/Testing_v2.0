@@ -1,11 +1,18 @@
 package API;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.OffsetDateTime;
+
 public class OrderData {
 
     private Integer id;
     private Integer petId;
     private Integer quantity;
-    private String shipDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private OffsetDateTime shipDate;
+
     private String status;
     private boolean complete;
 
@@ -13,7 +20,7 @@ public class OrderData {
 
     }
 
-    public OrderData(Integer id, Integer petId, Integer quantity, String shipDate, String status, boolean complete) {
+    public OrderData(Integer id, Integer petId, Integer quantity, OffsetDateTime shipDate, String status, boolean complete) {
         this.id = id;
         this.petId = petId;
         this.quantity = quantity;
@@ -36,7 +43,7 @@ public class OrderData {
         this.quantity = quantity;
     }
 
-    public void setShipDate(String shipDate) {
+    public void setShipDate(OffsetDateTime shipDate) {
         this.shipDate = shipDate;
     }
 
@@ -60,7 +67,7 @@ public class OrderData {
         return quantity;
     }
 
-    public String getShipDate() {
+    public OffsetDateTime getShipDate() {
         return shipDate;
     }
 
