@@ -1,4 +1,4 @@
-package API;
+package api.data;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;

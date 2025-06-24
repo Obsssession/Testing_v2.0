@@ -1,13 +1,13 @@
-package Selenide;
+package selenide.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$x;
 
+@Getter
 public class LoginSuccessPage {
 
-    @Getter
-    private final static SelenideElement Title = $x("//title[normalize-space() = 'Log In ‹ Ultimate QA — WordPress']");
+    private final SelenideElement title = $x("//title[normalize-space() = 'Log In ‹ Ultimate QA — WordPress']");
 
 }

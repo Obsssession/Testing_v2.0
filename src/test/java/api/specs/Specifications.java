@@ -1,5 +1,5 @@
 
-package API;
+package api.specs;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -9,14 +9,14 @@ import io.restassured.specification.*;
 
 public class Specifications {
 
-    public static RequestSpecification RequestSpec(String url) {
+    public static RequestSpecification requestSpec(String url) {
         return new RequestSpecBuilder()
                 .setBaseUri(url)
                 .setContentType(ContentType.JSON)
                 .build();
     }
 
-    public static ResponseSpecification UniqueStatus(Integer status) {
+    public static ResponseSpecification uniqueStatus(Integer status) {
         return new ResponseSpecBuilder()
                 .expectStatusCode(status)
                 .build();
