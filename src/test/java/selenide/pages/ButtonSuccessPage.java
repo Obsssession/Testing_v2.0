@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.$x;
 @Getter
 public class ButtonSuccessPage {
 
-    private final String buttonSuccessPageLink = "https://ultimateqaa.com/button-success";
+    private final String buttonSuccessPageLink = "https://ultimateqa.com/button-success";
     private final SelenideElement title = $x("//title[normalize-space() = 'Button success - Ultimate QA']");
 
 }

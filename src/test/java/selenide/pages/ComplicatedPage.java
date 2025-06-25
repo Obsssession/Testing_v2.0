@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
+import static io.qameta.allure.Allure.step;
 
 @Getter
 public class ComplicatedPage {
@@ -44,24 +45,28 @@ public class ComplicatedPage {
     @Step("Авторизация")
     public void login(String username, String password) {
 
-        loginUsername.setValue(username);
-        loginPassword.setValue(password);
-        loginButton.click();
+        step("Заполнение логина: " + username, () -> loginUsername.setValue(username));
+
+        step("Заполнение пароля: " + password, () -> loginPassword.setValue(password));
+
+        step("Отправка запроса на авторизацию", () -> loginButton.click());
 
     }
 
-    @Step("Заполнение формы")
     public void formSubmit(String name, String message, String email) {
 
-        nameInput.setValue(name);
-        messageInput.setValue(message);
-        emailInput.setValue(email);
-        captchaSolution.setValue(captchaSolve());
-        submitButton.click();
+        step("Заполнение имени: " + name, () -> nameInput.setValue(name));
+
+        step("Заполнение сообщения: " + message, () -> messageInput.setValue(message));
+
+        step("Заполнение почты: " + email, () -> emailInput.setValue(email));
+
+        step("Решение капчи", () -> captchaSolution.setValue(captchaSolve()));
+
+        step("Отправка формы", () -> submitButton.click());
 
     }
 
-    @Step("Решение капчи")
     public String captchaSolve() {
 
         String captcha = captchaQuestion.getText();
@@ -71,7 +76,7 @@ public class ComplicatedPage {
         int num2 = Integer.parseInt(parts[2]);
 
         int result = switch (operator) {
-            case "+" -> num1 + num2;
+            //case "+" -> num1 + num2;
             case "-" -> num1 - num2;
             case "*" -> num1 * num2;
             case "/" -> num1 / num2;

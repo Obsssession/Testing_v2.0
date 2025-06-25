@@ -9,8 +9,9 @@ import selenide.settings.BrowserSettings;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.exist;
+import static io.qameta.allure.Allure.step;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
 
 @Epic("UI тесты")
 public class UITests extends BrowserSettings {
@@ -28,9 +29,13 @@ public class UITests extends BrowserSettings {
         htmlElementsPage.buttonClickMe();
         buttonSuccessPage.getTitle().shouldBe(exist);
 
-        assertTrue(WebDriverRunner
-                .url()
-                .contains(buttonSuccessPage.getButtonSuccessPageLink()), "Ошибка при попытке перехода по кнопке \"Click Me\"");
+        step("Проверка ожидаемой страницы с фактически открытой", () -> {
+            assertTrue(WebDriverRunner
+                    .url()
+                    .contains(buttonSuccessPage.getButtonSuccessPageLink()),
+                    "Ожидалось: " + buttonSuccessPage.getButtonSuccessPageLink() +
+                            ", фактически: " + WebDriverRunner.url() + "\n");
+        });
 
     }
 
@@ -39,15 +44,23 @@ public class UITests extends BrowserSettings {
 
         openUrl(complicatedPage.getCOMPLICATED_PAGE_LINK());
 
-        complicatedPage
-                .getHeaderText()
-                .shouldHave(exactText(complicatedPage.getHEADER_TEXT()));
-        complicatedPage
-                .getPointTextFirst()
-                .shouldHave(exactText(complicatedPage.getPOINT_TEXT_FIRST()));
-        complicatedPage
-                .getPointTextSecond()
-                .shouldHave(exactText(complicatedPage.getPOINT_TEXT_SECOND()));
+        step("Проверка на корректность надписи в первой строке", () -> {
+            complicatedPage
+                    .getHeaderText()
+                    .shouldHave(exactText(complicatedPage.getHEADER_TEXT()));
+        });
+
+        step("Проверка на корректность надписи во второй строке", () -> {
+            complicatedPage
+                    .getPointTextFirst()
+                    .shouldHave(exactText(complicatedPage.getPOINT_TEXT_SECOND()));
+        });
+
+        step("Проверка на корректность надписи в третьей строке", () -> {
+            complicatedPage
+                    .getPointTextSecond()
+                    .shouldHave(exactText(complicatedPage.getPOINT_TEXT_SECOND()));
+        });
 
     }
 
@@ -60,9 +73,12 @@ public class UITests extends BrowserSettings {
                 .getTitle()
                 .shouldBe(exist);
 
-        assertTrue(WebDriverRunner
-                .url()
-                .contains(backOfficePage.getBackOfficePageLink()), "Ошибка при попытке авторизации");
+        step("Проверка ожидаемой страницы с фактически открытой", () -> {
+            assertEquals(backOfficePage.getBackOfficePageLink(), WebDriverRunner
+                    .url(),
+                    "Ожидалось: " + backOfficePage.getBackOfficePageLink() +
+                            ", фактически: " + WebDriverRunner.url() + "\n");
+        });
 
     }
 
@@ -72,10 +88,12 @@ public class UITests extends BrowserSettings {
         openUrl(complicatedPage.getCOMPLICATED_PAGE_LINK());
         complicatedPage.formSubmit("Вадим", "Привяу", "Testirovanie@OnJava.ru");
 
-        complicatedPage
-                .getFormMessage()
-                .shouldHave(exactText(complicatedPage.getFORM_SUBMIT_TEXT())
-                        .because("Произошла ошибка при сравнении ожидаемого текста после заполнения формы"));
+        step("Проверка ожидаемого текста с фактическим", () -> {
+            complicatedPage
+                    .getFormMessage()
+                    .shouldHave(exactText(complicatedPage.getFORM_SUBMIT_TEXT()));
+        });
 
     }
+
 }
